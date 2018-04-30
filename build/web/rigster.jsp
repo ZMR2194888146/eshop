@@ -5,11 +5,15 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" type="text/css" href="css/acount.css"/>
+        <c:if test="${cookie.username != null}">
+            <meta http-equiv="refresh" content="0;URL='http://${pageContext.request.serverName}:${pageContext.request.serverPort}${pageContext.request.contextPath}'"/>
+        </c:if>
         <title>注册</title>
     </head>
     <body>
@@ -71,8 +75,7 @@
                 var passwordagain = document.getElementById("passwordagain");
                 var text = document.getElementById("showScren");
                 if(username.value !== "" || password.value !== "" || passwordagain.value !== ""){
-                    if(password.value === passwordagain.value ){                        
-//                        var msg = "{'username':'" + username.value + "','password':'"+password.value + "'}";                       
+                    if(password.value === passwordagain.value ){                                            
                         var ajax = new XMLHttpRequest();
                         ajax.open("post","Persion",true);
                         ajax.setRequestHeader("Content-type","application/x-www-form-urlencoded");
@@ -88,7 +91,7 @@
                                 text.innerHTML = "服务器发生错误";
                            }
                        };
-                       ajax.send("username="+username.value+"&password=" + password.value);
+                       ajax.send("username="+username.value+"&password=" + password.value + "&type=register");
                     }else{
                         text.innerHTML = "密码不一致";
                     }

@@ -16,8 +16,8 @@
         <table>
             <tr id="header">
                 <td class="logo">
-                    <h1>EBOOK</h1>
-                    <p>www.ebook.shop</p>
+                    <h1>ESHOP</h1>
+                    <p>www.eshop.shop</p>
                 </td>
                 <td class="serch">
                     <select>
@@ -28,7 +28,8 @@
                     <button>搜索</button>
                 </td>
                 <td class="acount">
-                    <a href="rigster.jsp">注册</a>
+                    <font>你好！${cookie.username.value}</font>|
+                    <a href="rigster.jsp">注册</a>|
                     <a href="login.jsp">登录</a>
                 </td>
             </tr>
