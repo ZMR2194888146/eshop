@@ -72,14 +72,14 @@
                 var text = document.getElementById("showScren");
                 if(username.value !== "" || password.value !== "" || passwordagain.value !== ""){
                     if(password.value === passwordagain.value ){                        
-                        var msg = "{'username':'" + username.value + "','password':'"+password.value + "'}";                       
+//                        var msg = "{'username':'" + username.value + "','password':'"+password.value + "'}";                       
                         var ajax = new XMLHttpRequest();
+                        ajax.open("post","Persion",true);
+                        ajax.setRequestHeader("Content-type","application/x-www-form-urlencoded");
                         ajax.onreadystatechange = function(){                           
                            if(ajax.status !== 200) return;
                            var rs = ajax.responseText;
-                           alert(rs)
-                           var json = JSON.parse(rs);
-                           if(json.status === 1){
+                           if(parseInt(rs) === 1){
                                text.innerHTML = "注册成功，正在为你跳转到首页";
                                setTimeout(function(){
                                    window.location = "http://${pageContext.request.serverName}:${pageContext.request.serverPort}${pageContext.request.contextPath}/";
@@ -88,8 +88,7 @@
                                 text.innerHTML = "服务器发生错误";
                            }
                        };
-                       ajax.open("post","Persion",true);
-                       ajax.send("msg="+msg);
+                       ajax.send("username="+username.value+"&password=" + password.value);
                     }else{
                         text.innerHTML = "密码不一致";
                     }
