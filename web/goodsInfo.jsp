@@ -21,6 +21,10 @@
                 </td>
             </tr>
         </table>
-        
+    <script type="text/javascript">
+        function addtioncart(goodsid){
+            alert(goodsid);
+        }            
+    </script>
     </body>
 </html>

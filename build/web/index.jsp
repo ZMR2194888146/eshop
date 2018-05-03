@@ -5,6 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -28,9 +29,14 @@
                     <button>搜索</button>
                 </td>
                 <td class="acount">
-                    <font>你好！${cookie.username.value}</font>|
-                    <a href="rigster.jsp">注册</a>|
-                    <a href="login.jsp">登录</a>
+                    <span id="logouted">
+                        <a href="rigster.jsp">注册</a>|
+                        <a href="login.jsp">登录</a>
+                    </span>
+                    <span id="logined">
+                        <font>你好！${cookie.username.value}</font><br/>
+                        <a href="javascript:;" onclick="logout()">退出登录</a>
+                    </span>   
                 </td>
             </tr>
             <tr id="table-body">
@@ -49,9 +55,13 @@
                     }
                     var main =  document.getElementById("main");
                     main.innerHTML = ajax.responseText;
-                }
+                };
                 ajax.open("get","QueryGoods?cid="+encodeURI(cid),true);
                 ajax.send();
+            }
+            function logout(){
+                document.cookie = "username=; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+                window.location.href = document.URL;
             }
         </script>
     </body>

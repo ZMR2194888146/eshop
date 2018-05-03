@@ -74,7 +74,7 @@
                 var password = document.getElementById("password");
                 var passwordagain = document.getElementById("passwordagain");
                 var text = document.getElementById("showScren");
-                if(username.value !== "" || password.value !== "" || passwordagain.value !== ""){
+                if(username.value !== "" && password.value !== "" && passwordagain.value !== "" && passwordagain.value.length > 5){
                     if(password.value === passwordagain.value ){                                            
                         var ajax = new XMLHttpRequest();
                         ajax.open("post","Persion",true);
@@ -96,7 +96,7 @@
                         text.innerHTML = "密码不一致";
                     }
                 }else{
-                    text.innerHTML = "表单填写不完整";
+                    text.innerHTML = "表单填写不完整或密码不足最短要求";
                 }
             }
         </script>

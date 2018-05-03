@@ -40,9 +40,10 @@ public class GoodsInfo extends HttpServlet {
             throws ServletException, IOException {
         PrintWriter out = response.getWriter();
          try { 
+            String gid = request.getParameter("gid");
             Connection cn = DriverManager.getConnection(Config.SQLURI,Config.username,Config.password);
             PreparedStatement ps = cn.prepareStatement("select * from goods where gid = ?");
-            ps.setString(1,request.getParameter("gid"));
+            ps.setString(1,gid);
             ResultSet rs = ps.executeQuery();
             if(rs.next()){
                 out.print("<table id='content-inner'>");
@@ -57,7 +58,9 @@ public class GoodsInfo extends HttpServlet {
                 out.print("单价:"+rs.getString("price")+"<br/>");
                 out.print("&nbsp;型号:"+rs.getString("model")+"<br/>");
                 out.print("&nbsp;品牌:"+rs.getString("brand"));
-                out.print("<button value='加入购物车' onclick='addtioncart'>加入购物车</button>");
+                out.print("<button value='加入购物车' onclick='addtioncart(\"");
+                out.print(gid);
+                out.print("\")'>加入购物车</button>");
                 out.print("</td>");
                 out.print("</tr>");
                 out.print("</table>");
