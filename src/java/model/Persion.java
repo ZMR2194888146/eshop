@@ -92,10 +92,17 @@ public class Persion extends HttpServlet {
                 ps.setString(1, request.getParameter("username")); 
                 ResultSet rs = ps.executeQuery();
                 if(rs.next()){
-                    out.print(1);
-                    Cookie cookie = new Cookie("username",request.getParameter("username"));
-                    cookie.setMaxAge(3600);
-                    response.addCookie(cookie);
+                    if(rs.getString("password").equals(request.getParameter("password"))){
+                        out.print(1);
+                        Cookie username = new Cookie("username",request.getParameter("username"));
+                        Cookie userid = new Cookie("uid",rs.getString("uid").toString());
+                        username.setMaxAge(3600);
+                        userid.setMaxAge(3600);
+                        response.addCookie(username);
+                        response.addCookie(userid);  
+                    }else{
+                        out.print(3);
+                    }      
                 }else{
                     out.print(2);
                 }

@@ -21,9 +21,17 @@
                 </td>
             </tr>
         </table>
+    <script type="text/javascript" src="WEB-INF/js/function.js"></script>
     <script type="text/javascript">
         function addtioncart(goodsid){
-            alert(goodsid);
+            var uid = getCookie("uid");
+            var ajax = new XMLHttpRequest;
+            ajax.onreadystatechange = function(){
+                if(ajax.status !== 200) return;
+                
+            };
+            ajax.open("post","ShopingCart",true);
+            ajax.send("uid="+uid+"&gid="+goodsid);
         }            
     </script>
     </body>

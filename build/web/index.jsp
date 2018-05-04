@@ -13,7 +13,7 @@
         <link type="text/css" rel="stylesheet" href="css/index.css"/>
         <title>首页</title>
     </head>
-    <body>
+    <body onload="isLogin()">
         <table>
             <tr id="header">
                 <td class="logo">
@@ -46,7 +46,20 @@
                 <td id="main" class="content" colspan="2">&nbsp;</td>
             </tr>
         </table>
+        <script type="text/javascript" src="js/function.js"></script>
         <script type="text/javascript">
+            function isLogin(){
+                var logouted = document.getElementById("logouted");
+                var logined = document.getElementById("logined");
+//                alert(getCookie("username"))
+                if(getCookie("username") !== false){
+                    logouted.style.display="none";
+                    logined.style.display="block";
+                }else{
+                    logined.style.display="none";
+                    logouted.style.display="block";
+                }
+            }
             function showGoodsById(cid){
                 var ajax = new XMLHttpRequest;
                 ajax.onreadystatechange=function(){
@@ -61,6 +74,7 @@
             }
             function logout(){
                 document.cookie = "username=; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+                document.cookie = "uid=; expires=Thu, 01 Jan 1970 00:00:00 GMT";
                 window.location.href = document.URL;
             }
         </script>

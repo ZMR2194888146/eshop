@@ -78,7 +78,7 @@
                         }else if(rs === 2){
                             text.innerHTML = "账号或密码错误，请重新输入";
                         }else if(rs === 3){
-                            text.innerHTML = "服务器发生错误";
+                            text.innerHTML = "账号或密码错误";
                         }else{
                             text.innerHTML = "发生未知错误";
                         }
