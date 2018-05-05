@@ -51,7 +51,6 @@
             function isLogin(){
                 var logouted = document.getElementById("logouted");
                 var logined = document.getElementById("logined");
-//                alert(getCookie("username"))
                 if(getCookie("username") !== false){
                     logouted.style.display="none";
                     logined.style.display="block";

@@ -58,7 +58,8 @@ public class GoodsInfo extends HttpServlet {
                 out.print("单价:"+rs.getString("price")+"<br/>");
                 out.print("&nbsp;型号:"+rs.getString("model")+"<br/>");
                 out.print("&nbsp;品牌:"+rs.getString("brand"));
-                out.print("<button value='加入购物车' onclick='addtioncart(\"");
+                out.print("<font id='showScreen' style='display:block;color:green;font-size:0.6em;text-align:center'>&nbsp;</font>");
+                out.print("<button id='addcart' value='加入购物车' onclick='addtioncart(\"");
                 out.print(gid);
                 out.print("\")'>加入购物车</button>");
                 out.print("</td>");

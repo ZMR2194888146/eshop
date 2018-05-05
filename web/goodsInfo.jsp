@@ -21,18 +21,36 @@
                 </td>
             </tr>
         </table>
-    <script type="text/javascript" src="WEB-INF/js/function.js"></script>
+    <script type="text/javascript" src="js/function.js"></script>
     <script type="text/javascript">
         function addtioncart(goodsid){
-            var uid = getCookie("uid");
-            var ajax = new XMLHttpRequest;
-            ajax.onreadystatechange = function(){
-                if(ajax.status !== 200) return;
-                
-            };
-            ajax.open("post","ShopingCart",true);
-            ajax.send("uid="+uid+"&gid="+goodsid);
-        }            
+            var showScreen = document.getElementById("showScreen");
+            var addButton = document.getElementById("addcart");
+            if(getCookie("uid")){
+                uid = getCookie("uid");  
+                console.log(uid);
+                var ajax = new XMLHttpRequest;
+                ajax.open("POST","ShopingCart",true);
+                ajax.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+                ajax.onreadystatechange = function(){
+                    if(ajax.status !== 200) return;
+                    var rs = parseInt(ajax.responseText);
+                    if(rs === 1){
+                        showScreen.style.color = "green";
+                        showScreen.innerHTML = "加入购物车成功！";
+                        addButton.innerHTML = "查看购物车";
+                        addButton.setAttribute("onclick","myCart(" + uid + ")");
+                    }
+                };
+                ajax.send("uid="+ uid + "&gid=" + goodsid + "&RT=addGoods");
+            }else{
+                showScreen.style.color = "red";
+                showScreen.innerHTML = "你登录后加入购物车的物品才会被保存";
+            }
+        } 
+        function myCart(uid){
+            window.open("myCart.jsp?uid="+uid);
+        }
     </script>
     </body>
 </html>

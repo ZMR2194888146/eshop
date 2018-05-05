@@ -42,56 +42,37 @@ public class ShopingCart extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try(PrintWriter out = response.getWriter()){
-            String requestType = request.getParameter("requestType");
+            String requestType = request.getParameter("RT");
             switch(requestType){
                 case "addGoods":
-                    if(request.getParameter("uid") != null){
-                        if(addGoods(request.getParameter("uid"),request.getParameter("gid"),request)){
-                            out.print(1);
-                        }else{
-                            out.print(0);
-                        }
-                    }else{
-                        if(addGoods(null,request.getParameter("gid"),request)){
+                    if(!"null".equals(request.getParameter("uid"))){
+                        if(addGoods(request.getParameter("uid"),request.getParameter("gid"),request,response)){
                             out.print(1);
                         }else{
                             out.print(0);
                         }
                     }
+                    break;
             }
         }
     }
 
-    private boolean addGoods(String uid,String gid,HttpServletRequest request){
+    private boolean addGoods(String uid,String gid,HttpServletRequest request,HttpServletResponse response){
         boolean isFinsh = false;
-        if(uid == null){
-            Cookie[] cookies = request.getCookies();
-            for(Cookie cookie: cookies){
-               if("cart".equals(cookie)){
-                   String cart = cookie.getValue();
-                   cart += "uid:"+uid+";gid:"+gid;
-                   cookie.setValue(cart);
-                   isFinsh = true;
-               }  
+        try {
+            Class.forName(config.Config.driver);
+            Connection con = DriverManager.getConnection(config.Config.SQLURI, config.Config.username, config.Config.password);
+            PreparedStatement ps = con.prepareStatement("INSERT INTO shopingcart VALUES(?,?,?,?)");
+            ps.setString(1, String.valueOf(new Date().getTime()));
+            ps.setString(2, gid);
+            ps.setString(3, uid);
+            ps.setInt(4, 1);
+            int rs = ps.executeUpdate();
+            if(rs == 1){
+                isFinsh = true;
             }
-        }else{
-            try {
-                Class.forName(config.Config.driver);
-                Connection con = DriverManager.getConnection(config.Config.SQLURI, config.Config.username, config.Config.password);
-                PreparedStatement ps = con.prepareStatement("INSERT INTO shopingcart VALUES(?,?,?,?)");
-                ps.setString(0, String.valueOf(new Date().getTime()));
-                ps.setString(1, gid);
-                ps.setString(2, uid);
-                ps.setInt(3, 1);
-                int rs = ps.executeUpdate();
-                if(rs == 1){
-                    isFinsh = true;
-                }
-            } catch (ClassNotFoundException ex) {
-                Logger.getLogger(ShopingCart.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (SQLException ex) {
-                Logger.getLogger(ShopingCart.class.getName()).log(Level.SEVERE, null, ex);
-            }
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(ShopingCart.class.getName()).log(Level.SEVERE, null, ex);
         }
         return isFinsh;
     }
