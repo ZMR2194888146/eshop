@@ -17,7 +17,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -29,35 +28,38 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(name = "ShopingCart", urlPatterns = {"/ShopingCart"})
 public class ShopingCart extends HttpServlet {
 
-
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        try(PrintWriter out = response.getWriter()){
-            String requestType = request.getParameter("RT");
-            switch(requestType){
-                case "addGoods":
-                    if(!"null".equals(request.getParameter("uid"))){
-                        if(addGoods(request.getParameter("uid"),request.getParameter("gid"),request,response)){
-                            out.print(1);
-                        }else{
-                            out.print(0);
-                        }
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws IOException{
+        PrintWriter out = response.getWriter();
+        String requestType = request.getParameter("RT");
+        switch(requestType){
+            case "addGoods":
+                if(!"null".equals(request.getParameter("uid"))){
+                    if(addGoods(request.getParameter("uid"),request.getParameter("gid"))){
+                        out.print(1);
+                    }else{
+                       out.print(0);
                     }
-                    break;
-            }
+                }
+                break;
+            case "showGoods":
+                String uid = request.getParameter("uid");
+                showAllOnCart(uid,out);
+                break;
         }
     }
+    
+   
 
-    private boolean addGoods(String uid,String gid,HttpServletRequest request,HttpServletResponse response){
+    /**
+     * Put it into the database what user's shoping cart when he is logined
+     * 
+     * @param uid
+     * @param gid
+     * @param request
+     * @param response
+     * @return 
+     */
+    private boolean addGoods(String uid,String gid){
         boolean isFinsh = false;
         try {
             Class.forName(config.Config.driver);
@@ -76,6 +78,42 @@ public class ShopingCart extends HttpServlet {
         }
         return isFinsh;
     }
+    
+    /**
+     * Accoding to the user id to show all goods on database to html
+     * @param uid want to show all goods 
+     */
+    private void showAllOnCart(String uid,PrintWriter out){
+        
+    }
+    
+    
+     /**
+     *  Accoding to the request type to call diffrience function
+     * 
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        processRequest(request,response);
+    }
+    
+    /**
+     * 
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException 
+     */
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        processRequest(request,response);
+    }
+    
     
     /**
      * Returns a short description of the servlet.

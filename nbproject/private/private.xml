@@ -6,7 +6,12 @@
             <file>file:/D:/JavaEE/eshop/src/java/model/Persion.java</file>
             <file>file:/D:/JavaEE/eshop/web/goodsInfo.jsp</file>
             <file>file:/D:/JavaEE/eshop/web/myCart.jsp</file>
+            <file>file:/D:/JavaEE/eshop/src/java/servlet/ShowGoods.java</file>
+            <file>file:/D:/JavaEE/eshop/web/rigster.jsp</file>
+            <file>file:/D:/JavaEE/eshop/web/index.jsp</file>
             <file>file:/D:/JavaEE/eshop/web/login.jsp</file>
+            <file>file:/D:/JavaEE/eshop/src/java/servlet/ShowGoodsClassify.java</file>
+            <file>file:/D:/JavaEE/eshop/src/java/config/Config.java</file>
         </group>
     </open-files>
 </project-private>

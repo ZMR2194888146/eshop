@@ -36,6 +36,7 @@
                     <span id="logined">
                         <font>你好！${cookie.username.value}</font><br/>
                         <a href="javascript:;" onclick="logout()">退出登录</a>
+                        <a href="myCart.jsp" target="_blank">查看购物车</a>
                     </span>   
                 </td>
             </tr>

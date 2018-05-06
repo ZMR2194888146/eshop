@@ -39,7 +39,7 @@
                         showScreen.style.color = "green";
                         showScreen.innerHTML = "加入购物车成功！";
                         addButton.innerHTML = "查看购物车";
-                        addButton.setAttribute("onclick","myCart(" + uid + ")");
+                        addButton.setAttribute("onclick","myCart()");
                     }
                 };
                 ajax.send("uid="+ uid + "&gid=" + goodsid + "&RT=addGoods");
@@ -48,8 +48,8 @@
                 showScreen.innerHTML = "你登录后加入购物车的物品才会被保存";
             }
         } 
-        function myCart(uid){
-            window.open("myCart.jsp?uid="+uid);
+        function myCart(){
+            window.open("myCart.jsp");
         }
     </script>
     </body>
