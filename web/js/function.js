@@ -19,5 +19,7 @@ function getCookie(name){
             console.log("no into");
             return false;
         }
+    }else{
+        return false;
     }
 }

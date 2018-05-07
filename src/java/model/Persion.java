@@ -62,15 +62,19 @@ public class Persion extends HttpServlet {
                     Class.forName(config.Config.driver);
                     Connection con = DriverManager.getConnection(config.Config.SQLURI, config.Config.username,config.Config.password);  
                     PreparedStatement ps = con.prepareStatement("INSERT INTO customers(uid,uname,password) VALUES(?,?,?)");
-                    ps.setString(1, String.valueOf(new Date().getTime()));
+                    String uidString =  String.valueOf(new Date().getTime());
+                    ps.setString(1,uidString);
                     ps.setString(2, request.getParameter("username"));
                     ps.setString(3, request.getParameter("password")); 
                     int rs = ps.executeUpdate();
                     if(rs == 1){
                         out.print(1);
-                        Cookie cookie = new Cookie("username",request.getParameter("username"));
-                        cookie.setMaxAge(3600);
-                        response.addCookie(cookie);
+                        Cookie username = new Cookie("username",request.getParameter("username"));
+                        Cookie uid = new Cookie("uid",uidString);
+                        username.setMaxAge(3600);
+                        uid.setMaxAge(3600);
+                        response.addCookie(username);
+                        response.addCookie(uid);
                     } else {
                     }
                 } catch (SQLException | ClassNotFoundException ex) {
