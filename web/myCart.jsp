@@ -17,8 +17,8 @@
             <h2>我的购物车</h2>
             <table id="maintable">
                 <tr class="title">
-                    <td class="checkBox"><input type="checkbox" onselect=""/><font>全选</font></td>
-                    <td class="img"></td>
+                    <td class="checkBox" onchange="onSelected('all')"><input type="checkbox" onselect=""/><font>全选</font></td>
+                    <td class="img">&nbsp;</td>
                     <td class="gname">商品名</td>
                     <td class="price">价格</td>
                     <td class="number">数量</td>
@@ -43,6 +43,16 @@
                 if(getCookie("uid") === false){      
                     maintable.innerHTML = "你当前尚未登录，请登录后查看";
                 }
+            }
+            function onSelected(str){
+                if(str !== "all"){
+                    var bottom = document.getElementById("bottom");
+                    var checkBox = document.getElementsByTagName("input");
+                    for(var i = 0;i < checkBox.length;i++){
+                        alert(checkBox[i].value);
+                    }
+                    
+                }  
             }
         </script>
     </body>

@@ -79,11 +79,11 @@ public class ShowGoods extends HttpServlet {
                 out.print("<td class='checkBox'>");
                 out.print("<input type='checkbox' value='");
                 out.print(rs.getFloat("price"));
-                out.print("'/>");
-                out.print("</td>");
-                out.print("<img class='img' src='");
+                out.print("' onchange='onSelected(\"non\")'/>");
+                out.print("</td><td  class='img'>");
+                out.print("<img width='50px;' src='images/");
                 out.print(rs.getString("smallphoto"));
-                out.print("'/></td>");
+                out.print(".jpg'/></td>");
                 out.print("<td class='gname'>");
                 out.print("<a href='goodsInfo.jsp?gid=");
                 out.print(rs.getString("gid"));

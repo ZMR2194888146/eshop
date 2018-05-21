@@ -49,9 +49,9 @@ public class GoodsInfo extends HttpServlet {
                 out.print("<table id='content-inner'>");
                 out.print("<tr>");
                 out.print("<td  class='img'>");
-                out.print("<img src='");
+                out.print("<img src='images/");
                 out.print(rs.getString("largephoto"));
-                out.print("'/>");
+                out.print(".jpg'/>");
                 out.print("</td>");
                 out.print("<td class='info'>");
                 out.print("<h1>"+rs.getString("gname")+"</h1>");

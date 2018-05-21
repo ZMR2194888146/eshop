@@ -54,8 +54,9 @@ public class QueryGoods extends HttpServlet {
                 out.print("<table>");
                 out.print("<tr>");
                 out.print("<td width=100px;>");
-                out.print("<img style='width:100px;height:100px' src='");
-                out.print("'/>");
+                out.print("<img style='width:100px;height:100px' src='images/");
+                out.print(rs.getString("smallphoto"));
+                out.print(".jpg'/>");
                 out.print("</td>");
                 out.print("<td style='text-argin:left;'>");
                 out.print("<a href='goodsInfo.jsp?gid=");
