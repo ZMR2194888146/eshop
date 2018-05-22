@@ -11,6 +11,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>商品详情</title>
         <link href="css/goodsInfo.css" rel="stylesheet" type="text/css"/>
+        <link rel="shortcut icon" href="https://www.aboy.site/wp-content/uploads/2018/05/ABoy.png"/>
     </head>
     <body>
         <table id="content">

@@ -11,6 +11,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>我的购物车</title>
         <link type="text/css" rel="stylesheet" href="css/mycart.css"/>
+        <link rel="shortcut icon" href="https://www.aboy.site/wp-content/uploads/2018/05/ABoy.png"/>
     </head>
     <body onload="isLogin()">
         <div id="main">  
@@ -31,7 +32,8 @@
                 <tr>
                     <td><input class="checkBox" type="checkbox"/>全选</td>
                     <td><a class="delete" href="javascript:;" onclick="">删除</a></td>
-                    <td>已选择<span>&nbsp;</span>件</td>
+                    <td>已选择：<span id="num">0</span>&nbsp;件</td>
+                    <td>总计：<span id="money">0</span>&nbsp;元</td>
                     <td class="buttonArea"><a class="button" href="javascript:;">结算</a></td>
                 </tr>  
             </table>
@@ -46,12 +48,21 @@
             }
             function onSelected(str){
                 if(str !== "all"){
-                    var bottom = document.getElementById("bottom");
+                    var count = 0;
+                    var price = 0;
+                    var number = document.getElementById("num");
+                    var Money = document.getElementById("money");
                     var checkBox = document.getElementsByTagName("input");
-                    for(var i = 0;i < checkBox.length;i++){
-                        alert(checkBox[i].value);
+                    var singleGoodsNumber = document.getElementsByClassName("number");
+                    var singleGoodsPrice = document.getElementsByClassName("price");
+                    for(var i = 1;i < checkBox.length - 1;i++){
+                        if(checkBox[i].checked){
+                            price = price + singleGoodsNumber[i].innerHTML * checkBox[i].value;
+                            count++;
+                        }  
                     }
-                    
+                   number.innerHTML = count.toString();
+                   Money.innerHTML = price.toString();
                 }  
             }
         </script>
