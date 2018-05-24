@@ -34,7 +34,7 @@ public class ShopingCart extends HttpServlet {
         switch(requestType){
             case "addGoods":
                 if(!"null".equals(request.getParameter("uid"))){
-                    if(addGoods(request.getParameter("uid"),request.getParameter("gid"))){
+                    if(addGoods(request.getParameter("uid"),request.getParameter("gid"),Integer.valueOf(request.getParameter("goodsNumber")))){
                         out.print(1);
                     }else{
                        out.print(0);
@@ -59,19 +59,33 @@ public class ShopingCart extends HttpServlet {
      * @param response
      * @return 
      */
-    private boolean addGoods(String uid,String gid){
+    private boolean addGoods(String uid,String gid,int number){
         boolean isFinsh = false;
         try {
             Class.forName(config.Config.driver);
             Connection con = DriverManager.getConnection(config.Config.SQLURI, config.Config.username, config.Config.password);
-            PreparedStatement ps = con.prepareStatement("INSERT INTO shopingcart VALUES(?,?,?,?)");
-            ps.setString(1, String.valueOf(new Date().getTime()));
-            ps.setString(2, gid);
-            ps.setString(3, uid);
-            ps.setInt(4, 1);
-            int rs = ps.executeUpdate();
-            if(rs == 1){
-                isFinsh = true;
+             PreparedStatement ps = con.prepareStatement("SELECT * FROM shopingcart WHERE gid = ?");
+             ps.setString(1, gid);
+             ResultSet rset = ps.executeQuery();
+            if(rset.next()){
+                ps = con.prepareStatement("UPDATE shopingcart SET num = ? WHERE gid = ? AND uid = ?");
+                ps.setInt(1, number);
+                ps.setString(2, gid);
+                ps.setString(3, uid);
+                int rs = ps.executeUpdate();
+                if(rs == 1){
+                    isFinsh = true;
+                }
+            }else{
+                ps = con.prepareStatement("INSERT INTO shopingcart VALUES(?,?,?,?)");
+                ps.setString(1, String.valueOf(new Date().getTime()));
+                ps.setString(2, gid);
+                ps.setString(3, uid);
+                ps.setInt(4, 1);
+                int rs = ps.executeUpdate();
+                if(rs == 1){
+                    isFinsh = true;
+                }
             }
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(ShopingCart.class.getName()).log(Level.SEVERE, null, ex);

@@ -49,21 +49,44 @@
             function onSelected(str){
                 if(str !== "all"){
                     var count = 0;
-                    var price = 0;
+                    var price = 0;s
                     var number = document.getElementById("num");
                     var Money = document.getElementById("money");
                     var checkBox = document.getElementsByTagName("input");
-                    var singleGoodsNumber = document.getElementsByClassName("number");
-                    var singleGoodsPrice = document.getElementsByClassName("price");
+                    var singleGoodsNumber = document.getElementsByClassName("account");
                     for(var i = 1;i < checkBox.length - 1;i++){
                         if(checkBox[i].checked){
-                            price = price + singleGoodsNumber[i].innerHTML * checkBox[i].value;
+                            price = price + singleGoodsNumber[i].value * checkBox[i].value;
                             count++;
                         }  
                     }
                    number.innerHTML = count.toString();
                    Money.innerHTML = price.toString();
                 }  
+            }
+            function modifyGoodsNum(gid){
+               
+            }
+            function addGoods(gid){
+                
+            }
+            function reduceGoods(gid){
+                
+            }
+            function happenChange(gid,uid,num){
+                uid = getCookie("uid");  
+                console.log(uid);
+                var ajax = new XMLHttpRequest;
+                ajax.open("POST","ShopingCart",true);
+                ajax.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+                ajax.onreadystatechange = function(){
+                    if(ajax.status !== 200) return;
+                    var rs = parseInt(ajax.responseText);
+                    if(rs === 1){
+                      
+                    }
+                };
+                ajax.send("uid="+ uid + "&gid=" + goodsid + "&RT=addGoods&goodsNumber=1");
             }
         </script>
     </body>

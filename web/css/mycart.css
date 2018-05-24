@@ -17,8 +17,10 @@ and open the template in the editor.
 .img{width: 50px;display: inline-block;}
 .gname{width: 480px;}
 .price{width: 100px;}
-.number{width: 100px;}
+.number{width: 100px;text-align: center;}
+.number button{width: 20px;}
 .delete{width: 60px;}
+.account{width: 20px;}
 
 #bottom{position: fixed;margin: auto; bottom: 0;width: 800px;;background: #888888;}
 #bottom .button{display: block;width: 100px;height: 50px;background: red;border: none;font-size: 1.8em;color: #FFFFFF;text-align: center;text-decoration: none;line-height: 50px;}

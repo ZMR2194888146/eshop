@@ -70,15 +70,18 @@ public class ShowGoods extends HttpServlet {
         try{
             Class.forName(config.Config.driver);
             Connection con = DriverManager.getConnection(config.Config.SQLURI,config.Config.username,config.Config.password);
-            PreparedStatement ps = con.prepareStatement("SELECT * FROM goods WHERE gid IN (SELECT gid FROM shopingcart WHERE uid = ?)");
+            PreparedStatement ps = con.prepareStatement("select * from goods,shopingcart where uid = ? and goods.gid = shopingcart.gid");
             ps.setString(1, request.getParameter("uid"));
             ResultSet rs = ps.executeQuery();
             while(rs.next()){
+                float price = rs.getFloat("price");
+                String gid = rs.getString("gid");
+                int num = rs.getInt("num");
                 out.print("<table>");
                 out.print("<tr>");
                 out.print("<td class='checkBox'>");
                 out.print("<input type='checkbox' value='");
-                out.print(rs.getFloat("price"));
+                out.print(price);
                 out.print("' onchange='onSelected(\"non\")'/>");
                 out.print("</td><td  class='img'>");
                 out.print("<img width='50px;' src='images/");
@@ -86,15 +89,17 @@ public class ShowGoods extends HttpServlet {
                 out.print(".jpg'/></td>");
                 out.print("<td class='gname'>");
                 out.print("<a href='goodsInfo.jsp?gid=");
-                out.print(rs.getString("gid"));
+                out.print(gid);
                 out.print("' target=_blank>"+rs.getString("gname"));
                 out.print("</a>");
                 out.print("</td>");
-                out.print("<td class='price'>");
+                out.print("<td>");
                 out.print("￥" + rs.getFloat("price") );
                 out.print("</td>");
                 out.print("<td class='number'>");
-                out.print(1);
+                out.print("<button type='button' onclick='addGoods(\"" + gid + "\")'>+</button>");
+                out.print("<input class='account' type='text' value='" + num +"' onchange='modifyGoodsNum(\""+ gid +"\")'/>");
+                out.print("<button type='button' onclick='reduceGoods(\"" + gid + "\")'>-</button>");
                 out.print("</td>");
                 out.print("<td class='delete'>");
                 out.print("<a href='javascript:;' onclick='deleteGoods('");
