@@ -43,7 +43,7 @@
                         addButton.setAttribute("onclick","myCart()");
                     }
                 };
-                ajax.send("uid="+ uid + "&gid=" + goodsid + "&RT=addGoods&goodsNumber=1");
+                ajax.send("uid="+ uid + "&gid=" + goodsid + "&RT=alterNum&goodsNumber=1");
             }else{
                 showScreen.style.color = "red";
                 showScreen.innerHTML = "你登录后加入购物车的物品才会被保存";

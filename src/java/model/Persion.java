@@ -59,8 +59,8 @@ public class Persion extends HttpServlet {
         try(PrintWriter out = response.getWriter()){
             if(request.getParameter("username") != null ){      
                 try {     
-                    Class.forName(config.Config.driver);
-                    Connection con = DriverManager.getConnection(config.Config.SQLURI, config.Config.username,config.Config.password);  
+                    Class.forName(tools.Config.driver);
+                    Connection con = DriverManager.getConnection(tools.Config.SQLURI, tools.Config.username,tools.Config.password);  
                     PreparedStatement ps = con.prepareStatement("INSERT INTO customers(uid,uname,password) VALUES(?,?,?)");
                     String uidString =  String.valueOf(new Date().getTime());
                     ps.setString(1,uidString);
@@ -90,8 +90,8 @@ public class Persion extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try(PrintWriter out = response.getWriter()){
             try {
-                Class.forName(config.Config.driver);
-                Connection con = DriverManager.getConnection(config.Config.SQLURI, config.Config.username,config.Config.password);
+                Class.forName(tools.Config.driver);
+                Connection con = DriverManager.getConnection(tools.Config.SQLURI, tools.Config.username,tools.Config.password);
                 PreparedStatement ps = con.prepareStatement("SELECT * FROM customers WHERE uname = ?");
                 ps.setString(1, request.getParameter("username")); 
                 ResultSet rs = ps.executeQuery();

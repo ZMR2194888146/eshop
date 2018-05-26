@@ -18,12 +18,12 @@
             <h2>我的购物车</h2>
             <table id="maintable">
                 <tr class="title">
-                    <td class="checkBox" onchange="onSelected('all')"><input type="checkbox" onselect=""/><font>全选</font></td>
+                    <td class="checkBox" onchange="onSelected('all')"><input type="checkbox" onselect=""/><font style="font-size: 8pt;">全选</font></td>
                     <td class="img">&nbsp;</td>
-                    <td class="gname">商品名</td>
-                    <td class="price">价格</td>
-                    <td class="number">数量</td>
-                    <td class="delete">操作</td>
+                    <td class="gname"><font style="font-size: 8pt;">商品名</font></td>
+                    <td class="price"><font style="font-size: 8pt;">价格</font></td>
+                    <td class="number"><font style="font-size: 8pt;">数量</font></td>
+                    <td class="delete"><font style="font-size: 8pt;">操作</font></td>
                 </tr>
                 <jsp:include page="ShowGoods?uid=${cookie.uid.value}" flush="true"/>
             </table>
@@ -49,14 +49,14 @@
             function onSelected(str){
                 if(str !== "all"){
                     var count = 0;
-                    var price = 0;s
+                    var price = 0;
                     var number = document.getElementById("num");
                     var Money = document.getElementById("money");
-                    var checkBox = document.getElementsByTagName("input");
+                    var Price = document.getElementsByClassName("box");
                     var singleGoodsNumber = document.getElementsByClassName("account");
-                    for(var i = 1;i < checkBox.length - 1;i++){
-                        if(checkBox[i].checked){
-                            price = price + singleGoodsNumber[i].value * checkBox[i].value;
+                    for(var i = 0;i < Price.length;i++){
+                        if(Price[i].checked){
+                            price = price + singleGoodsNumber[i].value * Price[i].value;
                             count++;
                         }  
                     }
@@ -64,16 +64,30 @@
                    Money.innerHTML = price.toString();
                 }  
             }
-            function modifyGoodsNum(gid){
-               
+            function deleteGoods(gid){
+                happenChange(gid,2,0);
             }
-            function addGoods(gid){
-                
+            function modifyGoodsNum(content,gid){
+                var num = parseInt(pacontent.innerHTML);
+                if(num !== 0){
+                    happenChange(gid,num + 1);
+                }else{
+                   deleteGoods(gid);
+                }   
             }
-            function reduceGoods(gid){
-                
+            function addGoods(content,gid){
+                var num = parseInt(content.nextSibling.value);
+                happenChange(gid,1,num + 1);
             }
-            function happenChange(gid,uid,num){
+            function reduceGoods(content,gid){
+                var num = content.previousSibling.value;
+                if(num !== 1){
+                   happenChange(gid,1,num - 1);
+                }else{
+                    happenChange(gid,2,0);
+                }
+            }
+            function happenChange(gid,type,num){
                 uid = getCookie("uid");  
                 console.log(uid);
                 var ajax = new XMLHttpRequest;
@@ -83,10 +97,14 @@
                     if(ajax.status !== 200) return;
                     var rs = parseInt(ajax.responseText);
                     if(rs === 1){
-                      
+                       window.location.reload();
                     }
                 };
-                ajax.send("uid="+ uid + "&gid=" + goodsid + "&RT=addGoods&goodsNumber=1");
+                if(type === 1){
+                    ajax.send("uid="+ uid + "&gid=" + gid + "&RT=alterNum&goodsNumber=" + num); 
+                }else{
+                    ajax.send("uid="+ uid + "&gid=" + gid + "&RT=delGoods&goodsNumber=1"); 
+                }  
             }
         </script>
     </body>

@@ -68,8 +68,7 @@ public class ShowGoods extends HttpServlet {
             throws ServletException, IOException {
         PrintWriter out = response.getWriter();
         try{
-            Class.forName(config.Config.driver);
-            Connection con = DriverManager.getConnection(config.Config.SQLURI,config.Config.username,config.Config.password);
+            Connection con = tools.DB.getConnection();
             PreparedStatement ps = con.prepareStatement("select * from goods,shopingcart where uid = ? and goods.gid = shopingcart.gid");
             ps.setString(1, request.getParameter("uid"));
             ResultSet rs = ps.executeQuery();
@@ -77,12 +76,9 @@ public class ShowGoods extends HttpServlet {
                 float price = rs.getFloat("price");
                 String gid = rs.getString("gid");
                 int num = rs.getInt("num");
-                out.print("<table>");
                 out.print("<tr>");
                 out.print("<td class='checkBox'>");
-                out.print("<input type='checkbox' value='");
-                out.print(price);
-                out.print("' onchange='onSelected(\"non\")'/>");
+                out.print("<input type='checkbox' class='box' value='" + price + "' onchange='onSelected(\"non\")'/>");
                 out.print("</td><td  class='img'>");
                 out.print("<img width='50px;' src='images/");
                 out.print(rs.getString("smallphoto"));
@@ -97,20 +93,17 @@ public class ShowGoods extends HttpServlet {
                 out.print("￥" + rs.getFloat("price") );
                 out.print("</td>");
                 out.print("<td class='number'>");
-                out.print("<button type='button' onclick='addGoods(\"" + gid + "\")'>+</button>");
-                out.print("<input class='account' type='text' value='" + num +"' onchange='modifyGoodsNum(\""+ gid +"\")'/>");
-                out.print("<button type='button' onclick='reduceGoods(\"" + gid + "\")'>-</button>");
+                out.print("<button type='button' onclick='addGoods(this,\""+ gid +"\")'>+</button>");
+                out.print("<input class='account' type='text' value='" + num +"' onchange='modifyGoodsNum(this,\""+ gid +"\")'/>");
+                out.print("<button type='button' onclick='reduceGoods(this,\"" + gid + "\")'>-</button>");
                 out.print("</td>");
                 out.print("<td class='delete'>");
-                out.print("<a href='javascript:;' onclick='deleteGoods('");
-                out.print(rs.getString("gid"));
-                out.print("'/>删除");
+                out.print("<a href=\"javascript:;\" onclick=\"deleteGoods('" + gid + "')\">删除");
                 out.print("</a>");
                 out.print("</td>");
-                out.print("</tr>");
-                out.print("</table>");
+                out.println("</tr>");
             }
-        } catch (ClassNotFoundException | SQLException ex) {
+        } catch (SQLException ex) {
             Logger.getLogger(ShopingCart.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

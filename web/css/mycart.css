@@ -11,12 +11,13 @@ and open the template in the editor.
 *{margin: 0;padding: 0;}
 #main{width: 800px;margin: auto;}
 #main tr{height: 50px;width: 100%;}
-#main table{margin-top: 10px;border-bottom: 1px #cc00cc solid; font-size: 0.6em}
+#main table{font-size: 0.6em}
 #main .title{border: none;background: #aaaaaa;height: 80px;font-size: 0.4em;}
+.goods,td,tr{margin-top: 10px;border-bottom: 1px #cc00cc solid; }
 .checkBox{width: 40px;}
 .img{width: 50px;display: inline-block;}
-.gname{width: 480px;}
-.price{width: 100px;}
+.gname{width: 480px;font-size: 1.2em;}
+.price{width: 100px;font-size: 1.2em;}
 .number{width: 100px;text-align: center;}
 .number button{width: 20px;}
 .delete{width: 60px;}
