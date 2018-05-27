@@ -18,7 +18,7 @@
             <h2>我的购物车</h2>
             <table id="maintable">
                 <tr class="title">
-                    <td class="checkBox" onchange="onSelected('all')"><input type="checkbox" onselect=""/><font style="font-size: 8pt;">全选</font></td>
+                    <td class="checkBox"><input type="checkbox" onchange="onSelected('all')"/><font style="font-size: 8pt;">全选</font></td>
                     <td class="img">&nbsp;</td>
                     <td class="gname"><font style="font-size: 8pt;">商品名</font></td>
                     <td class="price"><font style="font-size: 8pt;">价格</font></td>
@@ -30,7 +30,7 @@
             <table><tr><td>&nbsp;</td></tr></table>
             <table id="bottom">
                 <tr>
-                    <td><input class="checkBox" type="checkbox"/>全选</td>
+                    <td><input class="checkBox" onchange="onSelected('all')" type="checkbox"/>全选</td>
                     <td><a class="delete" href="javascript:;" onclick="">删除</a></td>
                     <td>已选择：<span id="num">0</span>&nbsp;件</td>
                     <td>总计：<span id="money">0</span>&nbsp;元</td>
@@ -62,6 +62,24 @@
                     }
                    number.innerHTML = count.toString();
                    Money.innerHTML = price.toString();
+                }else{
+                    var box = document.getElementsByTagName("input");
+                    var len =box.length;
+                    if(box[0].checked || box[len-1]){ 
+                        while(len--){
+                            if(box[len].type === "checkbox"){
+                                box[len].checked = true;
+                                onSelected('non');
+                            }
+                        }
+                    }else{
+                        while(len--){
+                            if(box[len].type === "checkbox"){
+                                box[len].checked = false;
+                                onSelected('non');
+                            }
+                        }
+                    }
                 }  
             }
             function deleteGoods(gid){
