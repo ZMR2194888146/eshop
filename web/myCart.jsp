@@ -18,23 +18,23 @@
             <h2>我的购物车</h2>
             <table id="maintable">
                 <tr class="title">
-                    <td class="checkBox"><input type="checkbox" onchange="onSelected('all')"/><font style="font-size: 8pt;">全选</font></td>
-                    <td class="img">&nbsp;</td>
-                    <td class="gname"><font style="font-size: 8pt;">商品名</font></td>
-                    <td class="price"><font style="font-size: 8pt;">价格</font></td>
-                    <td class="number"><font style="font-size: 8pt;">数量</font></td>
-                    <td class="delete"><font style="font-size: 8pt;">操作</font></td>
+                    <th class="checkBox"><input type="checkbox" onchange="onSelected('all')"/><font style="font-size: 8pt;">全选</font></th>
+                    <th class="img">&nbsp;</th>
+                    <th class="gname"><font style="font-size: 8pt;">商品名</font></th>
+                    <th class="price"><font style="font-size: 8pt;">价格</font></th>
+                    <th class="number"><font style="font-size: 8pt;">数量</font></th>
+                    <th class="delete"><font style="font-size: 8pt;">操作</font></th>
                 </tr>
                 <jsp:include page="ShowGoods?uid=${cookie.uid.value}" flush="true"/>
             </table>
             <table><tr><td>&nbsp;</td></tr></table>
             <table id="bottom">
                 <tr>
-                    <td><input class="checkBox" onchange="onSelected('all')" type="checkbox"/>全选</td>
-                    <td><a class="delete" href="javascript:;" onclick="">删除</a></td>
-                    <td>已选择：<span id="num">0</span>&nbsp;件</td>
-                    <td>总计：<span id="money">0</span>&nbsp;元</td>
-                    <td class="buttonArea"><a class="button" href="javascript:;">结算</a></td>
+                    <th><input class="checkBox" onchange="onSelected('all')" type="checkbox"/>全选</th>
+                    <th><a class="delete" href="javascript:;" onclick="">删除</a></th>
+                    <th>已选择：<span id="num">0</span>&nbsp;件</th>
+                    <th>总计：<span id="money">0</span>&nbsp;元</th>
+                    <th class="buttonArea"><a class="button" href="javascript:;">结算</a></th>
                 </tr>  
             </table>
         </div>
@@ -83,29 +83,29 @@
                 }  
             }
             function deleteGoods(gid){
-                happenChange(gid,2,0);
+                happenChange(null,gid,2,0);
             }
             function modifyGoodsNum(content,gid){
-                var num = parseInt(pacontent.innerHTML);
+                var num = parseInt(content.value);
                 if(num !== 0){
-                    happenChange(gid,num + 1);
+                    happenChange(content,1,gid,num);
                 }else{
                    deleteGoods(gid);
                 }   
             }
             function addGoods(content,gid){
                 var num = parseInt(content.nextSibling.value);
-                happenChange(gid,1,num + 1);
+                happenChange(content.nextSibling,gid,1,num + 1);
             }
             function reduceGoods(content,gid){
                 var num = content.previousSibling.value;
                 if(num !== 1){
-                   happenChange(gid,1,num - 1);
+                   happenChange(content.previousSibling,gid,1,num - 1);
                 }else{
                     happenChange(gid,2,0);
                 }
             }
-            function happenChange(gid,type,num){
+            function happenChange(contetnt,gid,type,num){
                 uid = getCookie("uid");  
                 console.log(uid);
                 var ajax = new XMLHttpRequest;
@@ -115,7 +115,7 @@
                     if(ajax.status !== 200) return;
                     var rs = parseInt(ajax.responseText);
                     if(rs === 1){
-                       window.location.reload();
+                       contetnt.value = num;
                     }
                 };
                 if(type === 1){
