@@ -18,7 +18,7 @@
             <h2>我的购物车</h2>
             <table id="maintable">
                 <tr class="title">
-                    <th class="checkBox"><input type="checkbox" onchange="onSelected('all')"/><font style="font-size: 8pt;">全选</font></th>
+                    <th class="checkBox"><input type="checkbox" onchange="allSelect(this)"/><font style="font-size: 8pt;">全选</font></th>
                     <th class="img">&nbsp;</th>
                     <th class="gname"><font style="font-size: 8pt;">商品名</font></th>
                     <th class="price"><font style="font-size: 8pt;">价格</font></th>
@@ -30,7 +30,7 @@
             <table><tr><td>&nbsp;</td></tr></table>
             <table id="bottom">
                 <tr>
-                    <th><input class="checkBox" onchange="onSelected('all')" type="checkbox"/>全选</th>
+                    <th><input class="checkBox" onchange="allSelect(this)" type="checkbox"/>全选</th>
                     <th><a class="delete" href="javascript:;" onclick="">删除</a></th>
                     <th>已选择：<span id="num">0</span>&nbsp;件</th>
                     <th>总计：<span id="money">0</span>&nbsp;元</th>
@@ -46,26 +46,10 @@
                     maintable.innerHTML = "你当前尚未登录，请登录后查看";
                 }
             }
-            function onSelected(str){
-                if(str !== "all"){
-                    var count = 0;
-                    var price = 0;
-                    var number = document.getElementById("num");
-                    var Money = document.getElementById("money");
-                    var Price = document.getElementsByClassName("box");
-                    var singleGoodsNumber = document.getElementsByClassName("account");
-                    for(var i = 0;i < Price.length;i++){
-                        if(Price[i].checked){
-                            price = price + singleGoodsNumber[i].value * Price[i].value;
-                            count++;
-                        }  
-                    }
-                   number.innerHTML = count.toString();
-                   Money.innerHTML = price.toString();
-                }else{
-                    var box = document.getElementsByTagName("input");
+            function allSelect(content){
+                var box = document.getElementsByTagName("input");
                     var len =box.length;
-                    if(box[0].checked || box[len-1]){ 
+                    if(content.checked){ 
                         while(len--){
                             if(box[len].type === "checkbox"){
                                 box[len].checked = true;
@@ -80,7 +64,22 @@
                             }
                         }
                     }
-                }  
+            }
+            function onSelected(str){
+                    var count = 0;
+                    var price = 0;
+                    var number = document.getElementById("num");
+                    var Money = document.getElementById("money");
+                    var Price = document.getElementsByClassName("box");
+                    var singleGoodsNumber = document.getElementsByClassName("account");
+                    for(var i = 0;i < Price.length;i++){
+                        if(Price[i].checked){
+                            price = price + singleGoodsNumber[i].value * Price[i].value;
+                            count++;
+                        }  
+                    }
+                   number.innerHTML = count.toString();
+                   Money.innerHTML = price.toString();
             }
             function deleteGoods(gid){
                 happenChange(null,gid,2,0);
