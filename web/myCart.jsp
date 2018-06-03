@@ -31,7 +31,7 @@
             <table id="bottom">
                 <tr>
                     <th><input class="checkBox" onchange="allSelect(this)" type="checkbox"/>全选</th>
-                    <th><a class="delete" href="javascript:;" onclick="">删除</a></th>
+                    <th><a class="delete" href="javascript:;" onclick="deleteSelected()">删除</a></th>
                     <th>已选择：<span id="num">0</span>&nbsp;件</th>
                     <th>总计：<span id="money">0</span>&nbsp;元</th>
                     <th class="buttonArea"><a class="button" href="javascript:;">结算</a></th>
@@ -53,19 +53,19 @@
                         while(len--){
                             if(box[len].type === "checkbox"){
                                 box[len].checked = true;
-                                onSelected('non');
+                                onSelected();
                             }
                         }
                     }else{
                         while(len--){
                             if(box[len].type === "checkbox"){
                                 box[len].checked = false;
-                                onSelected('non');
+                                onSelected();
                             }
                         }
                     }
             }
-            function onSelected(str){
+            function onSelected(){
                     var count = 0;
                     var price = 0;
                     var number = document.getElementById("num");
@@ -80,9 +80,25 @@
                     }
                    number.innerHTML = count.toString();
                    Money.innerHTML = price.toString();
+            }  
+            function deleteSelected(){
+                var box = document.getElementsByTagName("input");
+                    var len =box.length;
+                    while(len--){
+                        if(box[len].type === "checkbox"){
+                            if(box[len].checked){
+                                console.log(box[len]);
+                                var gid = box[len].getAttribut("gid");
+                                console.log(gid);
+                                console.log("提交删除");
+                                deleteGoods(box[len],gid);           
+                            }                            
+                        }                   
+                    }
             }
-            function deleteGoods(gid){
-                happenChange(null,gid,2,0);
+            function deleteGoods(content,gid){
+                console.log("调用happenchange函数");
+                happenChange(content,gid,2,0);                
             }
             function modifyGoodsNum(content,gid){
                 var num = parseInt(content.value);
@@ -98,15 +114,18 @@
             }
             function reduceGoods(content,gid){
                 var num = content.previousSibling.value;
-                if(num !== 1){
+                if(num > 1){
                    happenChange(content.previousSibling,gid,1,num - 1);
                 }else{
-                    happenChange(gid,2,0);
+                    happenChange(content,gid,2,0);
                 }
             }
-            function happenChange(contetnt,gid,type,num){
+            function happenChange(content,gid,type,num){
                 uid = getCookie("uid");  
-                console.log(uid);
+                console.log("uid:"+uid);
+                console.log("gid:"+gid);
+                console.log("type:"+type);
+                console.log("num:"+num);
                 var ajax = new XMLHttpRequest;
                 ajax.open("POST","ShopingCart",true);
                 ajax.setRequestHeader("Content-type","application/x-www-form-urlencoded");
@@ -114,7 +133,11 @@
                     if(ajax.status !== 200) return;
                     var rs = parseInt(ajax.responseText);
                     if(rs === 1){
-                       contetnt.value = num;
+                       content.value = num;
+                       onSelected();
+                       if(type === 2){
+                           content.parentNode.parentNode.style.display = "none";
+                       }
                     }
                 };
                 if(type === 1){

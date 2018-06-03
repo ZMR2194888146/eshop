@@ -78,7 +78,7 @@ public class ShowGoods extends HttpServlet {
                 int num = rs.getInt("num");
                 out.print("<tr>");
                 out.print("<td class='checkBox'>");
-                out.print("<input type='checkbox' class='box' value='" + price + "' onchange='onSelected()'/>");
+                out.print("<input type='checkbox' class='box' gid='" + gid + "' value='" + price + "' onchange='onSelected()'/>");
                 out.print("</td><td  class='img'>");
                 out.print("<img width='50px;' src='images/");
                 out.print(rs.getString("smallphoto"));
@@ -98,7 +98,7 @@ public class ShowGoods extends HttpServlet {
                 out.print("<button type='button' onclick='reduceGoods(this,\"" + gid + "\")'>-</button>");
                 out.print("</td>");
                 out.print("<td class='delete'>");
-                out.print("<a href=\"javascript:;\" onclick=\"deleteGoods('" + gid + "')\">删除");
+                out.print("<a href=\"javascript:;\" onclick=\"deleteGoods(this,'" + gid + "')\">删除");
                 out.print("</a>");
                 out.print("</td>");
                 out.println("</tr>");
