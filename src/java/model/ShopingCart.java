@@ -30,14 +30,15 @@ public class ShopingCart extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws IOException{
         PrintWriter out = response.getWriter();
+        int num = 0;
         String requestType = request.getParameter("RT");
         String uid = request.getParameter("uid");
-        String gid = request.getParameter("gid");
-        int num = Integer.valueOf(request.getParameter("goodsNumber"));
+        String gid = request.getParameter("gid"); 
         if(!"null".equals(request.getParameter("uid"))){
             switch(requestType){
                 case "alterNum":
                     //传入的为需要增加的量
+                     num = Integer.valueOf(request.getParameter("goodsNumber"));
                         if(alterNum(uid,gid,num)){
                             out.print(1);
                         }else{
@@ -45,7 +46,15 @@ public class ShopingCart extends HttpServlet {
                         }
                     break;
                 case "delGoods":
+                    num = Integer.valueOf(request.getParameter("goodsNumber"));
                     if(deleteGoods(uid,gid)){
+                        out.print(1);
+                    }else{
+                        out.print(0);
+                    }
+                    break;
+                case "pay":
+                    if(toPayment(request)){
                         out.print(1);
                     }else{
                         out.print(0);
@@ -119,6 +128,13 @@ public class ShopingCart extends HttpServlet {
         return re;
     }
     
+    private boolean toPayment(HttpServletRequest request){
+        int i =  Integer.valueOf(request.getParameter("goodsNum"));
+        String uid = request.getParameter("uid");
+        String SQL = "";
+
+        return false;
+    }
     
      /**
      *  Accoding to the request type to call diffrience function

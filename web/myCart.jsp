@@ -34,7 +34,7 @@
                     <th><a class="delete" href="javascript:;" onclick="deleteSelected()">删除</a></th>
                     <th>已选择：<span id="num">0</span>&nbsp;件</th>
                     <th>总计：<span id="money">0</span>&nbsp;元</th>
-                    <th class="buttonArea"><a class="button" href="javascript:;">结算</a></th>
+                    <th class="buttonArea"><a class="button" href="javascript:;" onclick="toPayment()">结算</a></th>
                 </tr>  
             </table>
         </div>
@@ -82,13 +82,13 @@
                    Money.innerHTML = price.toString();
             }  
             function deleteSelected(){
-                var box = document.getElementsByTagName("input");
+                var box = document.getElementsByClassName("box");
                     var len =box.length;
                     while(len--){
                         if(box[len].type === "checkbox"){
                             if(box[len].checked){
                                 console.log(box[len]);
-                                var gid = box[len].getAttribut("gid");
+                                var gid = box[len].getAttribute("gid");
                                 console.log(gid);
                                 console.log("提交删除");
                                 deleteGoods(box[len],gid);           
@@ -137,6 +137,7 @@
                        onSelected();
                        if(type === 2){
                            content.parentNode.parentNode.style.display = "none";
+                           content.parentNode.parentNode.parentNode.removeChild(content.parentNode.parentNode);
                        }
                     }
                 };
@@ -145,6 +146,39 @@
                 }else{
                     ajax.send("uid="+ uid + "&gid=" + gid + "&RT=delGoods&goodsNumber=1"); 
                 }  
+            }
+            function toPayment(){
+                var uid = getCookie("uid");
+                var box = document.getElementsByClassName("box");
+                var str = "";
+                var goodsNum = 0;
+                var Num = document.getElementsByClassName("account");
+                var len =box.length;
+                while(len--){
+                    if(box[len].type === "checkbox"){
+                        if(box[len].checked){
+                            console.log(box[len]);
+                            var gid = box[len].getAttribute("gid");
+                            var price = box[len].value;
+                            var num = Num[len].value;
+                            str = str + "&gid="+gid+ "&price=" + price + "&num=" + num; 
+                            goodsNum++;
+                        }                            
+                    }                   
+                }
+                console.log(str);
+                var ajax = new XMLHttpRequest;
+                ajax.open("POST","ShopingCart",true);
+                ajax.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+                ajax.onreadystatechange = function(){
+                    if(ajax.status !== 200) return;
+//                    var rs = parseInt(ajax.responseText);
+//                    if(rs === 1){
+                        var rs = ajax.responseText;
+                        console.log(rs);
+//                    }
+                };
+                ajax.send("RT=pay&goodsNum="+goodsNum+"&uid="+uid+str);
             }
         </script>
     </body>

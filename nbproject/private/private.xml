@@ -3,16 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/eshop/src/java/servlet/GoodsInfo.java</file>
-            <file>file:/D:/eshop/src/java/servlet/ShowGoodsClassify.java</file>
-            <file>file:/D:/eshop/web/css/mycart.css</file>
-            <file>file:/D:/eshop/web/login.jsp</file>
-            <file>file:/D:/eshop/web/goodsInfo.jsp</file>
-            <file>file:/D:/eshop/web/myCart.jsp</file>
-            <file>file:/D:/eshop/src/java/model/ShopingCart.java</file>
-            <file>file:/D:/eshop/src/java/tools/DB.java</file>
-            <file>file:/D:/eshop/src/java/servlet/ShowGoods.java</file>
-            <file>file:/D:/eshop/web/index.jsp</file>
+            <file>file:/C:/Users/Administrator/Desktop/eshop/web/Payment.jsp</file>
+            <file>file:/C:/Users/Administrator/Desktop/eshop/src/java/model/ShopingCart.java</file>
+            <file>file:/C:/Users/Administrator/Desktop/eshop/web/myCart.jsp</file>
+            <file>file:/C:/Users/Administrator/Desktop/eshop/web/index.jsp</file>
+            <file>file:/C:/Users/Administrator/Desktop/eshop/web/css/payment.css</file>
         </group>
     </open-files>
 </project-private>
